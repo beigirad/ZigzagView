@@ -61,7 +61,7 @@ public class ZigzagView extends View {
         mPath.lineTo(0, getHeight());
 
         int height = (int) zigzagHeight;
-        int seed = (int) Math.sqrt((8.0d * Math.pow(height, 2)) / 7.0);
+        int seed = 2 * height;
         int count = getWidth() / seed;
         int diff = getWidth() - (seed * count);
         int sideDiff = diff / 2;
