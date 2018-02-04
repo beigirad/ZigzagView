@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PorterDuffColorFilter;
+import android.os.Build;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
@@ -121,7 +122,7 @@ public class ZigzagView extends FrameLayout {
             this.mPath.lineTo(startSeed + x, upHeight);
             this.mPath.lineTo(endSeed, downHeight);
         }
-        if (zigzagElevation > 0) {
+        if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             generateShadow();
             canvas.drawBitmap(mShadow, 0, zigzagElevation / 2, null);
         }
@@ -130,6 +131,7 @@ public class ZigzagView extends FrameLayout {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void generateShadow() {
         mShadow = Bitmap.createBitmap(getWidth(), getHeight(), ALPHA_8);
         mShadow.eraseColor(TRANSPARENT);
