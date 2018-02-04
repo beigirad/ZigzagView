@@ -10,7 +10,7 @@
 
     <ir.beigirad.zigzagview.ZigzagView
         android:layout_width="match_parent"
-        app:zigzagHeight="12dp"
+        app:zigzagHeight="72dp"
         android:layout_height="240dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -55,7 +55,7 @@ public class ZigzagView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        mPath.moveTo(getWidth(),getHeight());
+        mPath.moveTo(getWidth(), getHeight());
         mPath.lineTo(getWidth(), 0);
         mPath.lineTo(0, 0);
         mPath.lineTo(0, getHeight());
@@ -73,12 +73,12 @@ public class ZigzagView extends View {
 
         for (int i = 0; i < count; i++) {
             int startSeed = (i * seed) + sideDiff;
-            int endSeed = ((i + 1) * seed) + sideDiff;
+            int endSeed = startSeed + seed;
 
             if (i == 0) {
                 startSeed = sideDiff;
             } else if (i == count - 1) {
-                endSeed = ((i + 1) * seed) + (sideDiff * 2);
+                endSeed = endSeed + sideDiff;
             }
 
             this.mPath.lineTo(startSeed + x, upHeight);
