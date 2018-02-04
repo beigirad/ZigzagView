@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/colorAccent"
+    android:background="#ecaeae"
     tools:context="ir.beigirad.zigzagview.MainActivity">
 
     <ir.beigirad.zigzagview.ZigzagView
         android:layout_width="match_parent"
-        app:zigzagHeight="10dp"
+        app:zigzagHeight="15dp"
         android:layout_height="240dp" />
 
 </android.support.constraint.ConstraintLayout>
