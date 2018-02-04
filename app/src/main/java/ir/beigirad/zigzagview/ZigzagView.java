@@ -18,18 +18,14 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-
-import ir.beigirad.zigzagview.R;
+import android.widget.FrameLayout;
 
 import static android.graphics.Bitmap.Config.ALPHA_8;
-import static android.graphics.Bitmap.Config.ARGB_4444;
-import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.graphics.Color.BLACK;
-import static android.graphics.Color.BLUE;
 import static android.graphics.Color.TRANSPARENT;
 import static android.graphics.PorterDuff.Mode.SRC_IN;
 
-public class ZigzagView extends View {
+public class ZigzagView extends FrameLayout {
     private Path mPath = new Path();
     Paint paint;
     Paint shadowPaint;
@@ -76,6 +72,8 @@ public class ZigzagView extends View {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
 
+
+        setWillNotDraw(false);
     }
 
     protected void onDraw(Canvas canvas) {

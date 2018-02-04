@@ -10,7 +10,19 @@
 
     <ir.beigirad.zigzagview.ZigzagView
         android:layout_width="match_parent"
-        app:zigzagHeight="15dp"
-        android:layout_height="240dp" />
+        app:zigzagHeight="10dp"
+        android:layout_height="240dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="sadhsakd" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="اتنلاتلاتلتالتال" />
+
+    </ir.beigirad.zigzagview.ZigzagView>
 
 </android.support.constraint.ConstraintLayout>
