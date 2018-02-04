@@ -2,5 +2,7 @@
 <resources>
     <declare-styleable name="ZigzagView">
         <attr name="zigzagHeight" format="dimension" />
+        <attr name="zigzagElevation" format="dimension" />
+        <attr name="zigzagBackgroundColor" format="color" />
     </declare-styleable>
 </resources>

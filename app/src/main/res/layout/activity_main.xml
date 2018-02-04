@@ -11,6 +11,8 @@
     <ir.beigirad.zigzagview.ZigzagView
         android:layout_width="match_parent"
         app:zigzagHeight="10dp"
+        app:zigzagBackgroundColor="@color/colorAccent"
+        app:zigzagElevation="111dp"
         android:layout_height="240dp">
 
         <TextView

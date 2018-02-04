@@ -30,7 +30,8 @@ public class ZigzagView extends FrameLayout {
     Paint paint;
     Paint shadowPaint;
     private float zigzagHeight;
-    float mShadowBlurRadius = 25;
+    private float zigzagElevation;
+    private int zigzagBackgroundColor;
     Bitmap mShadow;
 
     public ZigzagView(Context context) {
@@ -57,10 +58,12 @@ public class ZigzagView extends FrameLayout {
     private void init(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ZigzagView, defStyleAttr, defStyleRes);
         this.zigzagHeight = a.getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f);
+        this.zigzagElevation = a.getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f);
+        this.zigzagBackgroundColor = a.getColor(R.styleable.ZigzagView_zigzagBackgroundColor, Color.WHITE);
         a.recycle();
 
         this.paint = new Paint();
-        this.paint.setColor(Color.WHITE);
+        this.paint.setColor(zigzagBackgroundColor);
         this.paint.setStyle(Style.FILL);
         this.paint.setAntiAlias(true);
 
@@ -69,8 +72,9 @@ public class ZigzagView extends FrameLayout {
         shadowPaint.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
         shadowPaint.setAlpha(51); // 20%
 
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        zigzagElevation = Math.min(zigzagElevation, 25f);
 
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
 
         setWillNotDraw(false);
@@ -80,12 +84,11 @@ public class ZigzagView extends FrameLayout {
         super.onDraw(canvas);
 
         //calculate bounds
-
-        float left = getPaddingLeft() + mShadowBlurRadius;
-        float right = getWidth() - getPaddingRight() - mShadowBlurRadius;
-        float top = getPaddingTop() + (mShadowBlurRadius / 2);
-        float bottom = getHeight() - getPaddingBottom() - mShadowBlurRadius - (mShadowBlurRadius / 2);
-        int width = (int) (right-left);
+        float left = getPaddingLeft() + zigzagElevation;
+        float right = getWidth() - getPaddingRight() - zigzagElevation;
+        float top = getPaddingTop() + (zigzagElevation / 2);
+        float bottom = getHeight() - getPaddingBottom() - zigzagElevation - (zigzagElevation / 2);
+        int width = (int) (right - left);
         //int height = (int) (bottom-top);
 
         mPath.moveTo(right, bottom);
@@ -106,11 +109,11 @@ public class ZigzagView extends FrameLayout {
         float downHeight = bottom;
 
         for (int i = 0; i < count; i++) {
-            int startSeed = (i * seed) + sideDiff + (int)left;
+            int startSeed = (i * seed) + sideDiff + (int) left;
             int endSeed = startSeed + seed;
 
             if (i == 0) {
-                startSeed = (int)left + sideDiff;
+                startSeed = (int) left + sideDiff;
             } else if (i == count - 1) {
                 endSeed = endSeed + sideDiff;
             }
@@ -118,24 +121,26 @@ public class ZigzagView extends FrameLayout {
             this.mPath.lineTo(startSeed + x, upHeight);
             this.mPath.lineTo(endSeed, downHeight);
         }
-        generateShadow();
-        canvas.drawBitmap(mShadow,0,mShadowBlurRadius/2,null);
+        if (zigzagElevation > 0) {
+            generateShadow();
+            canvas.drawBitmap(mShadow, 0, zigzagElevation / 2, null);
+        }
 
         canvas.drawPath(mPath, paint);
 
     }
 
     private void generateShadow() {
-        mShadow = Bitmap.createBitmap(getWidth(), getHeight(),ALPHA_8);
+        mShadow = Bitmap.createBitmap(getWidth(), getHeight(), ALPHA_8);
         mShadow.eraseColor(TRANSPARENT);
         Canvas c = new Canvas(mShadow);
-        c.drawPath(mPath,shadowPaint);
+        c.drawPath(mPath, shadowPaint);
 
         RenderScript rs = RenderScript.create(getContext());
         ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, Element.U8(rs));
         Allocation input = Allocation.createFromBitmap(rs, mShadow);
         Allocation output = Allocation.createTyped(rs, input.getType());
-        blur.setRadius(mShadowBlurRadius);
+        blur.setRadius(zigzagElevation);
         blur.setInput(input);
         blur.forEach(output);
         output.copyTo(mShadow);
