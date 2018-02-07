@@ -4,27 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#ecaeae"
     tools:context="ir.beigirad.zigzagview.MainActivity">
 
-    <ir.beigirad.zigzagview.ZigzagView
-        android:layout_width="match_parent"
-        app:zigzagHeight="10dp"
-        app:zigzagBackgroundColor="@color/colorAccent"
-        app:zigzagElevation="111dp"
-        android:layout_height="240dp">
 
-        <TextView
+        <ir.beigirad.zigzagview.ZigzagView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="sadhsakd" />
+            android:layout_height="240dp"
+            app:zigzagBackgroundColor="#8bc34a"
+            app:zigzagElevation="8dp"
+            app:zigzagHeight="10dp"
+            app:zigzagPaddingContent="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="اتنلاتلاتلتالتال" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="ZigzagView"
+                android:textColor="#000000"
+                android:textSize="23sp" />
 
-    </ir.beigirad.zigzagview.ZigzagView>
+
+        </ir.beigirad.zigzagview.ZigzagView>
+
+
 
 </android.support.constraint.ConstraintLayout>

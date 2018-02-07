@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.Rect;
 import android.os.Build;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
@@ -17,7 +18,6 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -27,13 +27,21 @@ import static android.graphics.Color.TRANSPARENT;
 import static android.graphics.PorterDuff.Mode.SRC_IN;
 
 public class ZigzagView extends FrameLayout {
-    private Path mPath = new Path();
-    Paint paint;
-    Paint shadowPaint;
-    private float zigzagHeight;
-    private float zigzagElevation;
+    private int zigzagHeight;
+    private int zigagElevation;
+    private int zigzagPaddingContent;
     private int zigzagBackgroundColor;
-    Bitmap mShadow;
+
+    private Path pathZigzag = new Path();
+    private Paint paintZigzag;
+    private Paint paintShadow;
+
+    private Bitmap shadow;
+
+
+    Rect rectMain = new Rect();
+    Rect rectZigzag = new Rect();
+    Rect rectContent = new Rect();
 
     public ZigzagView(Context context) {
         super(context);
@@ -56,52 +64,70 @@ public class ZigzagView extends FrameLayout {
         init(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    private void init(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+
+    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ZigzagView, defStyleAttr, defStyleRes);
-        this.zigzagHeight = a.getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f);
-        this.zigzagElevation = a.getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f);
+        this.zigagElevation = (int) a.getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f);
+        this.zigzagHeight = (int) a.getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f);
+        this.zigzagPaddingContent = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingContent, 0.0f);
         this.zigzagBackgroundColor = a.getColor(R.styleable.ZigzagView_zigzagBackgroundColor, Color.WHITE);
         a.recycle();
 
-        this.paint = new Paint();
-        this.paint.setColor(zigzagBackgroundColor);
-        this.paint.setStyle(Style.FILL);
-        this.paint.setAntiAlias(true);
+        this.paintZigzag = new Paint();
+        this.paintZigzag.setColor(zigzagBackgroundColor);
+        this.paintZigzag.setStyle(Style.FILL);
 
-        //shadowPaint
-        shadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        shadowPaint.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
-        shadowPaint.setAlpha(51); // 20%
+        paintShadow = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintShadow.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
+        paintShadow.setAlpha(51); // 20%
 
-        zigzagElevation = Math.min(zigzagElevation, 25f);
+        zigagElevation = Math.min(zigagElevation, 25);
 
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-
         setWillNotDraw(false);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        rectMain.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
+        rectZigzag.set(rectMain.left + zigagElevation, rectMain.top + zigagElevation, rectMain.right - zigagElevation, rectMain.bottom - zigagElevation);
+        rectContent.set(rectZigzag.left + zigzagPaddingContent, rectZigzag.top + zigzagPaddingContent, rectZigzag.right - zigzagPaddingContent, rectZigzag.bottom - zigzagPaddingContent - zigzagHeight);
+
+        super.setPadding(rectContent.left, rectContent.top, rectMain.right - rectContent.right, rectMain.bottom - rectContent.bottom);
     }
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        //calculate bounds
-        float left = getPaddingLeft() + zigzagElevation;
-        float right = getWidth() - getPaddingRight() - zigzagElevation;
-        float top = getPaddingTop() + (zigzagElevation / 2);
-        float bottom = getHeight() - getPaddingBottom() - zigzagElevation - (zigzagElevation / 2);
+        drawZigzag();
+
+        if (zigagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            drawShadow();
+            canvas.drawBitmap(shadow, 0, zigagElevation / 2, null);
+        }
+
+        canvas.drawPath(pathZigzag, paintZigzag);
+    }
+
+    private void drawZigzag() {
+        float left = rectZigzag.left;
+        float right = rectZigzag.right;
+        float top = rectZigzag.top;
+        float bottom = rectZigzag.bottom;
         int width = (int) (right - left);
-        //int height = (int) (bottom-top);
 
-        mPath.moveTo(right, bottom);
-        mPath.lineTo(right, top);
-        mPath.lineTo(left, top);
-        mPath.lineTo(left, bottom);
+        pathZigzag.moveTo(right, bottom);
+        pathZigzag.lineTo(right, top);
+        pathZigzag.lineTo(left, top);
+        pathZigzag.lineTo(left, bottom);
 
-        int h = (int) zigzagHeight;
+        int h = zigzagHeight;
         int seed = 2 * h;
         int count = width / seed;
         int diff = width - (seed * count);
-        Log.d("diff", String.valueOf(diff));
         int sideDiff = diff / 2;
 
 
@@ -119,35 +145,29 @@ public class ZigzagView extends FrameLayout {
                 endSeed = endSeed + sideDiff;
             }
 
-            this.mPath.lineTo(startSeed + x, upHeight);
-            this.mPath.lineTo(endSeed, downHeight);
+            this.pathZigzag.lineTo(startSeed + x, upHeight);
+            this.pathZigzag.lineTo(endSeed, downHeight);
         }
-        if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            generateShadow();
-            canvas.drawBitmap(mShadow, 0, zigzagElevation / 2, null);
-        }
-
-        canvas.drawPath(mPath, paint);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void generateShadow() {
-        mShadow = Bitmap.createBitmap(getWidth(), getHeight(), ALPHA_8);
-        mShadow.eraseColor(TRANSPARENT);
-        Canvas c = new Canvas(mShadow);
-        c.drawPath(mPath, shadowPaint);
+    private void drawShadow() {
+        shadow = Bitmap.createBitmap(getWidth(), getHeight(), ALPHA_8);
+        shadow.eraseColor(TRANSPARENT);
+        Canvas c = new Canvas(shadow);
+        c.drawPath(pathZigzag, paintShadow);
 
         RenderScript rs = RenderScript.create(getContext());
         ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, Element.U8(rs));
-        Allocation input = Allocation.createFromBitmap(rs, mShadow);
+        Allocation input = Allocation.createFromBitmap(rs, shadow);
         Allocation output = Allocation.createTyped(rs, input.getType());
-        blur.setRadius(zigzagElevation);
+        blur.setRadius(zigagElevation);
         blur.setInput(input);
         blur.forEach(output);
-        output.copyTo(mShadow);
+        output.copyTo(shadow);
         input.destroy();
         output.destroy();
 
     }
+
 }

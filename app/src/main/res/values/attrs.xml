@@ -4,5 +4,6 @@
         <attr name="zigzagHeight" format="dimension" />
         <attr name="zigzagElevation" format="dimension" />
         <attr name="zigzagBackgroundColor" format="color" />
+        <attr name="zigzagPaddingContent" format="dimension" />
     </declare-styleable>
 </resources>
