@@ -28,7 +28,7 @@ import static android.graphics.PorterDuff.Mode.SRC_IN;
 
 public class ZigzagView extends FrameLayout {
     private int zigzagHeight;
-    private int zigagElevation;
+    private int zigzagElevation;
     private int zigzagPaddingContent;
     private int zigzagBackgroundColor;
 
@@ -67,7 +67,7 @@ public class ZigzagView extends FrameLayout {
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ZigzagView, defStyleAttr, defStyleRes);
-        this.zigagElevation = (int) a.getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f);
+        this.zigzagElevation = (int) a.getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f);
         this.zigzagHeight = (int) a.getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f);
         this.zigzagPaddingContent = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingContent, 0.0f);
         this.zigzagBackgroundColor = a.getColor(R.styleable.ZigzagView_zigzagBackgroundColor, Color.WHITE);
@@ -81,7 +81,7 @@ public class ZigzagView extends FrameLayout {
         paintShadow.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
         paintShadow.setAlpha(51); // 20%
 
-        zigagElevation = Math.min(zigagElevation, 25);
+        zigzagElevation = Math.min(zigzagElevation, 25);
 
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
@@ -93,7 +93,7 @@ public class ZigzagView extends FrameLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         rectMain.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
-        rectZigzag.set(rectMain.left + zigagElevation, rectMain.top + zigagElevation, rectMain.right - zigagElevation, rectMain.bottom - zigagElevation);
+        rectZigzag.set(rectMain.left + zigzagElevation, rectMain.top + zigzagElevation, rectMain.right - zigzagElevation, rectMain.bottom - zigzagElevation);
         rectContent.set(rectZigzag.left + zigzagPaddingContent, rectZigzag.top + zigzagPaddingContent, rectZigzag.right - zigzagPaddingContent, rectZigzag.bottom - zigzagPaddingContent - zigzagHeight);
 
         super.setPadding(rectContent.left, rectContent.top, rectMain.right - rectContent.right, rectMain.bottom - rectContent.bottom);
@@ -104,9 +104,9 @@ public class ZigzagView extends FrameLayout {
 
         drawZigzag();
 
-        if (zigagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             drawShadow();
-            canvas.drawBitmap(shadow, 0, zigagElevation / 2, null);
+            canvas.drawBitmap(shadow, 0, zigzagElevation / 2, null);
         }
 
         canvas.drawPath(pathZigzag, paintZigzag);
@@ -161,7 +161,7 @@ public class ZigzagView extends FrameLayout {
         ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, Element.U8(rs));
         Allocation input = Allocation.createFromBitmap(rs, shadow);
         Allocation output = Allocation.createTyped(rs, input.getType());
-        blur.setRadius(zigagElevation);
+        blur.setRadius(zigzagElevation);
         blur.setInput(input);
         blur.forEach(output);
         output.copyTo(shadow);
