@@ -117,7 +117,7 @@ public class ZigzagView extends FrameLayout {
 
         if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             drawShadow();
-            canvas.drawBitmap(shadow, 0, zigzagElevation / 2, null);
+            canvas.drawBitmap(shadow,null,rectMain, null);
         }
 
         canvas.drawPath(pathZigzag, paintZigzag);
