@@ -27,10 +27,16 @@ import static android.graphics.Color.TRANSPARENT;
 import static android.graphics.PorterDuff.Mode.SRC_IN;
 
 public class ZigzagView extends FrameLayout {
+    private final String TAG = this.getClass().getSimpleName();
     private int zigzagHeight;
     private int zigzagElevation;
     private int zigzagPaddingContent;
     private int zigzagBackgroundColor;
+    private int zigzagPadding;
+    private int zigzagPaddingLeft;
+    private int zigzagPaddingRight;
+    private int zigzagPaddingTop;
+    private int zigzagPaddingBottom;
 
     private Path pathZigzag = new Path();
     private Paint paintZigzag;
@@ -71,6 +77,11 @@ public class ZigzagView extends FrameLayout {
         this.zigzagHeight = (int) a.getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f);
         this.zigzagPaddingContent = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingContent, 0.0f);
         this.zigzagBackgroundColor = a.getColor(R.styleable.ZigzagView_zigzagBackgroundColor, Color.WHITE);
+        this.zigzagPadding = (int) a.getDimension(R.styleable.ZigzagView_zigzagPadding, zigzagElevation);
+        this.zigzagPaddingLeft = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingLeft, zigzagPadding);
+        this.zigzagPaddingRight = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingRight, zigzagPadding);
+        this.zigzagPaddingTop = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingTop, zigzagPadding);
+        this.zigzagPaddingBottom = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingBottom, zigzagPadding);
         a.recycle();
 
         this.paintZigzag = new Paint();
@@ -93,7 +104,7 @@ public class ZigzagView extends FrameLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         rectMain.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
-        rectZigzag.set(rectMain.left + zigzagElevation, rectMain.top + zigzagElevation, rectMain.right - zigzagElevation, rectMain.bottom - zigzagElevation);
+        rectZigzag.set(rectMain.left + zigzagPaddingLeft, rectMain.top + zigzagPaddingTop, rectMain.right - zigzagPaddingRight, rectMain.bottom - zigzagPaddingBottom);
         rectContent.set(rectZigzag.left + zigzagPaddingContent, rectZigzag.top + zigzagPaddingContent, rectZigzag.right - zigzagPaddingContent, rectZigzag.bottom - zigzagPaddingContent - zigzagHeight);
 
         super.setPadding(rectContent.left, rectContent.top, rectMain.right - rectContent.right, rectMain.bottom - rectContent.bottom);
