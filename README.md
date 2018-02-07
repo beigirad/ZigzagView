@@ -1,5 +1,6 @@
 # ZigzagView
 [![](https://jitpack.io/v/beigirad/ZigzagView.svg)](https://jitpack.io/#beigirad/ZigzagView)
+[![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=14)
 
 a zigzag view  for using for ticket or invoice 
 
