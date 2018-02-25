@@ -1,6 +1,7 @@
 # ZigzagView
 [![](https://jitpack.io/v/beigirad/ZigzagView.svg)](https://jitpack.io/#beigirad/ZigzagView)
 [![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=14)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ZigzagView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/6787)
 
 a zigzag view  for using for ticket or invoice 
 
@@ -45,10 +46,6 @@ dependencies {
     
 </ir.beigirad.zigzagview.ZigzagView>
 ```
-
-# Used libraries
-
-* [com.android.support:appcompat-v7](https://developer.android.com/topic/libraries/support-library/packages.html#v7-appcompat)
 
 
 # Thanks
