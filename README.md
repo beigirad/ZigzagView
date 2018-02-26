@@ -1,6 +1,7 @@
 # ZigzagView
-[![](https://jitpack.io/v/beigirad/ZigzagView.svg)](https://jitpack.io/#beigirad/ZigzagView)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=14)
+[![](https://jitpack.io/v/beigirad/ZigzagView.svg)](https://jitpack.io/#beigirad/ZigzagView)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ZigzagView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/6787)
 
 a zigzag view  for using for ticket or invoice 
