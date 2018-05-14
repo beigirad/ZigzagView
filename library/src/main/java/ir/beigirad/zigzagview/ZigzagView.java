@@ -115,7 +115,7 @@ public class ZigzagView extends FrameLayout {
 
         drawZigzag();
 
-        if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             drawShadow();
             canvas.drawBitmap(shadow, 0, 0, null);
         }
@@ -161,7 +161,7 @@ public class ZigzagView extends FrameLayout {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void drawShadow() {
         shadow = Bitmap.createBitmap(getWidth(), getHeight(), ALPHA_8);
         shadow.eraseColor(TRANSPARENT);
