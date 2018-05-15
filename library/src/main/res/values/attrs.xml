@@ -10,5 +10,9 @@
         <attr name="zigzagPaddingRight" format="dimension" />
         <attr name="zigzagPaddingBottom" format="dimension" />
         <attr name="zigzagPaddingTop" format="dimension" />
+        <attr name="zigzagSides">
+            <flag name="top" value="1" />
+            <flag name="bottom" value="2" />
+        </attr>
     </declare-styleable>
 </resources>
