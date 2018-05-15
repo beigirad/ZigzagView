@@ -13,6 +13,7 @@
             app:zigzagBackgroundColor="#8bc34a"
             app:zigzagElevation="8dp"
             app:zigzagHeight="10dp"
+            app:zigzagSides="top|bottom"
             app:zigzagPaddingContent="16dp">
 
             <TextView
