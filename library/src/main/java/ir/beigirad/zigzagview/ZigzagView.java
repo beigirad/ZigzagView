@@ -30,7 +30,6 @@ public class ZigzagView extends FrameLayout {
     private static final int ZIGZAG_TOP = 1;
     private static final int ZIGZAG_BOTTOM = 2; // default to be backward compatible.Like google ;)
 
-    private final String TAG = this.getClass().getSimpleName();
     private int zigzagHeight;
     private int zigzagElevation;
     private int zigzagPaddingContent;
@@ -41,6 +40,7 @@ public class ZigzagView extends FrameLayout {
     private int zigzagPaddingTop;
     private int zigzagPaddingBottom;
     private int zigzagSides;
+    private float zigzagShadowAlpha;
 
     private Path pathZigzag = new Path();
     private Paint paintZigzag;
@@ -77,27 +77,29 @@ public class ZigzagView extends FrameLayout {
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ZigzagView, defStyleAttr, defStyleRes);
-        this.zigzagElevation = (int) a.getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f);
-        this.zigzagHeight = (int) a.getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f);
-        this.zigzagPaddingContent = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingContent, 0.0f);
-        this.zigzagBackgroundColor = a.getColor(R.styleable.ZigzagView_zigzagBackgroundColor, Color.WHITE);
-        this.zigzagPadding = (int) a.getDimension(R.styleable.ZigzagView_zigzagPadding, zigzagElevation);
-        this.zigzagPaddingLeft = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingLeft, zigzagPadding);
-        this.zigzagPaddingRight = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingRight, zigzagPadding);
-        this.zigzagPaddingTop = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingTop, zigzagPadding);
-        this.zigzagPaddingBottom = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingBottom, zigzagPadding);
-        this.zigzagSides = a.getInt(R.styleable.ZigzagView_zigzagSides, ZIGZAG_BOTTOM);
+        zigzagElevation = (int) a.getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f);
+        zigzagHeight = (int) a.getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f);
+        zigzagPaddingContent = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingContent, 0.0f);
+        zigzagBackgroundColor = a.getColor(R.styleable.ZigzagView_zigzagBackgroundColor, Color.WHITE);
+        zigzagPadding = (int) a.getDimension(R.styleable.ZigzagView_zigzagPadding, zigzagElevation);
+        zigzagPaddingLeft = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingLeft, zigzagPadding);
+        zigzagPaddingRight = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingRight, zigzagPadding);
+        zigzagPaddingTop = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingTop, zigzagPadding);
+        zigzagPaddingBottom = (int) a.getDimension(R.styleable.ZigzagView_zigzagPaddingBottom, zigzagPadding);
+        zigzagSides = a.getInt(R.styleable.ZigzagView_zigzagSides, ZIGZAG_BOTTOM);
+        zigzagShadowAlpha = a.getFloat(R.styleable.ZigzagView_zigzagShadowAlpha, 0.5f);
         a.recycle();
 
-        this.paintZigzag = new Paint();
-        this.paintZigzag.setColor(zigzagBackgroundColor);
-        this.paintZigzag.setStyle(Style.FILL);
+        zigzagElevation = Math.min(zigzagElevation, 25);
+        zigzagShadowAlpha = Math.min(zigzagShadowAlpha, 100);
+
+        paintZigzag = new Paint();
+        paintZigzag.setColor(zigzagBackgroundColor);
+        paintZigzag.setStyle(Style.FILL);
 
         paintShadow = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintShadow.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
-        paintShadow.setAlpha(51); // 20%
-
-        zigzagElevation = Math.min(zigzagElevation, 25);
+        paintShadow.setAlpha((int) (zigzagShadowAlpha * 100));
 
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
