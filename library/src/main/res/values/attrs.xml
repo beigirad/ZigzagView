@@ -14,5 +14,6 @@
             <flag name="top" value="1" />
             <flag name="bottom" value="2" />
         </attr>
+        <attr name="zigzagShadowAlpha" format="float" />
     </declare-styleable>
 </resources>

@@ -10,9 +10,6 @@ a zigzag view  for using for ticket or invoice
 
 
 # Setup
-
-This library requires `minSdkVersion` to be set to `14` or above, like the [Official Support Library](https://developer.android.com/topic/libraries/support-library/index.html#api-versions).
-
 #### Step #1. Add the JitPack repository to root build.gradle file:
 
 ```gradle
@@ -28,7 +25,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    compile 'com.github.beigirad:ZigzagView:1.0.3'
+    implementation 'com.github.beigirad:ZigzagView:1.0.4'
 
 }
 ```
@@ -41,16 +38,31 @@ dependencies {
     app:zigzagBackgroundColor="#8bc34a"
     app:zigzagElevation="8dp"
     app:zigzagHeight="10dp"
+    app:zigzagShadowAlpha="0.9"
+    app:zigzagSides="top|bottom"
     app:zigzagPaddingContent="16dp">
     
     // add child view(s)
     
 </ir.beigirad.zigzagview.ZigzagView>
 ```
+# Attributes
+|       Attribute       |       Type      | Default Value   |          Description          |
+|:---------------------:|:---------------:|-----------------|:-----------------------------:|
+|      zigzagHeight     |    dimension    | `0dp`           |     height of zigzag jags     |
+|    zigzagElevation    |    dimension    | `0dp`           |         side of shadow        |
+| zigzagBackgroundColor |      color      | `Color.WHITE`   |        background color       |
+|  zigzagPaddingContent |    dimension    | `0dp`           |        content padding        |
+|     zigzagPadding     |    dimension    | `0dp`           |          view padding         |
+|   zigzagPaddingLeft   |    dimension    | `zigzagPadding` |     left side view padding    |
+|   zigzagPaddingRight  |    dimension    | `zigzagPadding` |    right side view padding    |
+|  zigzagPaddingBottom  |    dimension    | `zigzagPadding` |    bottom side view padding   |
+|    zigzagPaddingTop   |    dimension    | `zigzagPadding` |     top side view padding     |
+|      zigzagSides      |      enum       | `bottom`        |     choosing zigzag sides     |
+|   zigzagShadowAlpha   | float `[0,1.0]` | `0.5`           | amount of shadow transparency |
 
 
 # Thanks
-
 [**Reza Kardoost**](https://github.com/RezaKardoost) for helping me out with ZigzagView Shadow/Elevation.
 
 # License
