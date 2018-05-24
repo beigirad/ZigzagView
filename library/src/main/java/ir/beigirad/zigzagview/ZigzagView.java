@@ -145,7 +145,7 @@ public class ZigzagView extends FrameLayout {
         if (containsSide(zigzagSides, ZIGZAG_TOP))
             drawHorizontalSide(pathZigzag, left, top, right, true);
         else
-            pathZigzag.lineTo(top, left);
+            pathZigzag.lineTo(left, top);
 
         pathZigzag.lineTo(left, bottom);
 
