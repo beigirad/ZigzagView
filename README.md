@@ -25,7 +25,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'com.github.beigirad:ZigzagView:1.0.5'
+    implementation 'com.github.beigirad:ZigzagView:VERSION'
 
 }
 ```
