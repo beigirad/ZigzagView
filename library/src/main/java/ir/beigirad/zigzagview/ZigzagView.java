@@ -101,7 +101,6 @@ public class ZigzagView extends FrameLayout {
         paintShadow.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
         paintShadow.setAlpha((int) (zigzagShadowAlpha * 100));
 
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         setWillNotDraw(false);
     }
