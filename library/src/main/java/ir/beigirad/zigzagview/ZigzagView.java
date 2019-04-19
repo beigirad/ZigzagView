@@ -101,7 +101,6 @@ public class ZigzagView extends FrameLayout {
         paintShadow.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
         paintShadow.setAlpha((int) (zigzagShadowAlpha * 100));
 
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         setWillNotDraw(false);
     }
@@ -125,7 +124,7 @@ public class ZigzagView extends FrameLayout {
 
         drawZigzag();
 
-        if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !isInEditMode()) {
             drawShadow();
             canvas.drawBitmap(shadow, 0, 0, null);
         }
