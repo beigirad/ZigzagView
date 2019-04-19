@@ -9,8 +9,13 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 104
-        versionName "1.0.4"
+
+        def majorVersion = 1
+        def minorVersion = 0
+        def patchVersion = 7
+
+        versionCode majorVersion * 10000 + minorVersion * 100 + patchVersion
+        versionName "$majorVersion.$minorVersion.$patchVersion"
 
     }
 
