@@ -125,7 +125,7 @@ public class ZigzagView extends FrameLayout {
 
         drawZigzag();
 
-        if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (zigzagElevation > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !isInEditMode()) {
             drawShadow();
             canvas.drawBitmap(shadow, 0, 0, null);
         }
