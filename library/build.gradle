@@ -12,7 +12,7 @@ android {
 
         def majorVersion = 1
         def minorVersion = 0
-        def patchVersion = 7
+        def patchVersion = 8
 
         versionCode majorVersion * 10000 + minorVersion * 100 + patchVersion
         versionName "$majorVersion.$minorVersion.$patchVersion"
@@ -30,4 +30,5 @@ android {
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
