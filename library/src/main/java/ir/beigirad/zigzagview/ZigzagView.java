@@ -16,6 +16,7 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
@@ -99,9 +100,7 @@ public class ZigzagView extends FrameLayout {
         zigzagElevation = Math.min(zigzagElevation, 25);
         zigzagShadowAlpha = Math.min(zigzagShadowAlpha, 100);
 
-        paintZigzag = new Paint();
-        paintZigzag.setColor(zigzagBackgroundColor);
-        paintZigzag.setStyle(Style.FILL);
+        paintZigzag = createZigzagPaint();
 
         paintShadow = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintShadow.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
@@ -109,6 +108,24 @@ public class ZigzagView extends FrameLayout {
 
 
         setWillNotDraw(false);
+    }
+
+    public @ColorInt
+    int getZigzagBackgroundColor() {
+        return zigzagBackgroundColor;
+    }
+
+    public void setZigzagBackgroundColor(@ColorInt int color) {
+        zigzagBackgroundColor = color;
+        paintZigzag = createZigzagPaint();
+        invalidate();
+    }
+
+    private Paint createZigzagPaint() {
+        Paint paintZigzag = new Paint();
+        paintZigzag.setColor(zigzagBackgroundColor);
+        paintZigzag.setStyle(Style.FILL);
+        return paintZigzag;
     }
 
     @Override

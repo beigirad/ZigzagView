@@ -14,6 +14,7 @@
 
 
         <ir.beigirad.zigzagview.ZigzagView
+            android:id="@+id/clickableZigzagView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sample_tile_height"
             app:zigzagBackgroundColor="#FF8F00"
