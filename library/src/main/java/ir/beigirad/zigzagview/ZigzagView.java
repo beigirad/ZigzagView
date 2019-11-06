@@ -101,18 +101,19 @@ public class ZigzagView extends FrameLayout {
         zigzagShadowAlpha = Math.min(zigzagShadowAlpha, 100);
 
         paintZigzag = createZigzagPaint();
-
-        paintShadow = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintShadow.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
-        paintShadow.setAlpha((int) (zigzagShadowAlpha * 100));
-
+        paintShadow = createShadowPaint();
 
         setWillNotDraw(false);
+        setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
 
     public @ColorInt
     int getZigzagBackgroundColor() {
         return zigzagBackgroundColor;
+    }
+
+    public float getZigzagShadowAlpha() {
+        return zigzagShadowAlpha;
     }
 
     public void setZigzagBackgroundColor(@ColorInt int color) {
@@ -121,11 +122,24 @@ public class ZigzagView extends FrameLayout {
         invalidate();
     }
 
+    public void setZigzagShadowAlpha(float alpha) {
+        zigzagShadowAlpha = alpha;
+        paintShadow = createShadowPaint();
+        invalidate();
+    }
+
     private Paint createZigzagPaint() {
-        Paint paintZigzag = new Paint();
+        Paint paintZigzag = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintZigzag.setColor(zigzagBackgroundColor);
         paintZigzag.setStyle(Style.FILL);
         return paintZigzag;
+    }
+
+    private Paint createShadowPaint() {
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColorFilter(new PorterDuffColorFilter(BLACK, SRC_IN));
+        paint.setAlpha((int) (zigzagShadowAlpha * 100));
+        return paint;
     }
 
     @Override
