@@ -6,7 +6,7 @@
 
 a zigzag view  for using for ticket or invoice 
 
-<img src="https://raw.githubusercontent.com/beigirad/ZigzagView/master/shot/zigzag.png" alt="ZigzagView"  width="200" />
+<img src="https://github.com/oradkovsky/ZigzagView/blob/master/shot/zigzag.png" alt="ZigzagView"  width="200" />
 
 
 # Setup
@@ -24,6 +24,9 @@ allprojects {
 #### Step #2. Add the dependency
 
 ```groovy
+
+//INFO: please build aar to use `soft` addition
+
 dependencies {
     implementation 'com.github.beigirad:ZigzagView:VERSION'
 
@@ -60,6 +63,7 @@ dependencies {
 |    zigzagPaddingTop   |    dimension    | `zigzagPadding` |     top side view padding     |
 |      zigzagSides      |      enum       | `bottom`        |     choosing zigzag sides     |
 |   zigzagShadowAlpha   | float `[0,1.0]` | `0.5`           | amount of shadow transparency |
+|       zigzagType      |      enum       | `sharp`         | sharp or soft shape of zigzag |
 
 
 # Thanks

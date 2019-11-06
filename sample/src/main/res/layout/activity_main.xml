@@ -12,6 +12,68 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
+        <ir.beigirad.zigzagview.ZigzagView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_tile_height"
+            app:zigzagBackgroundColor="#FF8F00"
+            app:zigzagElevation="8dp"
+            app:zigzagHeight="@dimen/sample_zigzag_height"
+            app:zigzagPaddingContent="16dp"
+            app:zigzagShadowAlpha="0.9"
+            app:zigzagSides="bottom"
+            app:zigzagType="sharp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="bottom, sharp"
+                android:textColor="@color/sample_text_color"
+                android:textSize="23sp" />
+
+        </ir.beigirad.zigzagview.ZigzagView>
+
+        <ir.beigirad.zigzagview.ZigzagView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_tile_height"
+            app:zigzagBackgroundColor="#FF8F00"
+            app:zigzagElevation="8dp"
+            app:zigzagHeight="@dimen/sample_zigzag_height"
+            app:zigzagPaddingContent="16dp"
+            app:zigzagShadowAlpha="0.9"
+            app:zigzagSides="bottom"
+            app:zigzagType="soft">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="bottom, soft"
+                android:textColor="@color/sample_text_color"
+                android:textSize="23sp" />
+
+        </ir.beigirad.zigzagview.ZigzagView>
+
+        <ir.beigirad.zigzagview.ZigzagView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sample_tile_height"
+            app:zigzagBackgroundColor="#FF8F00"
+            app:zigzagElevation="8dp"
+            app:zigzagHeight="@dimen/sample_zigzag_height"
+            app:zigzagPaddingContent="16dp"
+            app:zigzagShadowAlpha="0.9"
+            app:zigzagSides="right"
+            app:zigzagType="soft">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="right, soft"
+                android:textColor="@color/sample_text_color"
+                android:textSize="23sp" />
+
+        </ir.beigirad.zigzagview.ZigzagView>
 
         <ir.beigirad.zigzagview.ZigzagView
             android:id="@+id/clickableZigzagView"
@@ -51,48 +113,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="top, soft"
-                android:textColor="@color/sample_text_color"
-                android:textSize="23sp" />
-
-        </ir.beigirad.zigzagview.ZigzagView>
-
-        <ir.beigirad.zigzagview.ZigzagView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_tile_height"
-            app:zigzagBackgroundColor="#FF8F00"
-            app:zigzagElevation="8dp"
-            app:zigzagHeight="@dimen/sample_zigzag_height"
-            app:zigzagPaddingContent="16dp"
-            app:zigzagShadowAlpha="0.9"
-            app:zigzagSides="bottom"
-            app:zigzagType="sharp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="bottom, sharp"
-                android:textColor="@color/sample_text_color"
-                android:textSize="23sp" />
-
-        </ir.beigirad.zigzagview.ZigzagView>
-
-        <ir.beigirad.zigzagview.ZigzagView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_tile_height"
-            app:zigzagBackgroundColor="#FF8F00"
-            app:zigzagElevation="8dp"
-            app:zigzagHeight="@dimen/sample_zigzag_height"
-            app:zigzagPaddingContent="16dp"
-            app:zigzagShadowAlpha="0.9"
-            app:zigzagSides="bottom"
-            app:zigzagType="soft">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="bottom, soft"
                 android:textColor="@color/sample_text_color"
                 android:textSize="23sp" />
 
@@ -198,27 +218,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="right, sharp"
-                android:textColor="@color/sample_text_color"
-                android:textSize="23sp" />
-
-        </ir.beigirad.zigzagview.ZigzagView>
-
-        <ir.beigirad.zigzagview.ZigzagView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sample_tile_height"
-            app:zigzagBackgroundColor="#FF8F00"
-            app:zigzagElevation="8dp"
-            app:zigzagHeight="@dimen/sample_zigzag_height"
-            app:zigzagPaddingContent="16dp"
-            app:zigzagShadowAlpha="0.9"
-            app:zigzagSides="right"
-            app:zigzagType="soft">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="right, soft"
                 android:textColor="@color/sample_text_color"
                 android:textSize="23sp" />
 
