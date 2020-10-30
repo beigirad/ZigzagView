@@ -17,6 +17,7 @@ import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.annotation.ColorInt
 import androidx.annotation.RequiresApi
 
 class ZigzagView @JvmOverloads constructor(
@@ -27,7 +28,12 @@ class ZigzagView @JvmOverloads constructor(
     private var zigzagHeight = 0f
     private var zigzagElevation = 0f
     private var zigzagPaddingContent = 0f
-    private var zigzagBackgroundColor = 0
+    var zigzagBackgroundColor = Color.WHITE
+        set(@ColorInt value) {
+            field = value
+            paintZigzag.color = value
+            invalidate()
+        }
     private var zigzagPadding = 0f
     private var zigzagPaddingLeft = 0f
     private var zigzagPaddingRight = 0f
@@ -58,7 +64,7 @@ class ZigzagView @JvmOverloads constructor(
             zigzagElevation = getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f)
             zigzagHeight = getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f)
             zigzagPaddingContent = getDimension(R.styleable.ZigzagView_zigzagPaddingContent, 0.0f)
-            zigzagBackgroundColor = getColor(R.styleable.ZigzagView_zigzagBackgroundColor, Color.WHITE)
+            zigzagBackgroundColor = getColor(R.styleable.ZigzagView_zigzagBackgroundColor, zigzagBackgroundColor)
             zigzagPadding = getDimension(R.styleable.ZigzagView_zigzagPadding, zigzagElevation)
             zigzagPaddingLeft = getDimension(R.styleable.ZigzagView_zigzagPaddingLeft, zigzagPadding)
             zigzagPaddingRight = getDimension(R.styleable.ZigzagView_zigzagPaddingRight, zigzagPadding)
@@ -71,7 +77,6 @@ class ZigzagView @JvmOverloads constructor(
 
         zigzagElevation = zigzagElevation.coerceIn(0f, 25f)
         zigzagShadowAlpha = zigzagShadowAlpha.coerceIn(0f, 1f)
-        paintZigzag.color = zigzagBackgroundColor
         paintShadow.alpha = (zigzagShadowAlpha * 100).toInt()
         setWillNotDraw(false)
     }

@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
-
-        <ir.beigirad.zigzagview.ZigzagView
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            app:zigzagBackgroundColor="#FF8F00"
-            app:zigzagElevation="8dp"
-            app:zigzagHeight="7dp"
-            app:zigzagShadowAlpha="0.9"
-            app:zigzagSides="bottom"
-            app:zigzagPaddingContent="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="ZigzagView"
-                android:textColor="#000000"
-                android:textSize="23sp" />
-
-
-        </ir.beigirad.zigzagview.ZigzagView>
+    android:gravity="center_horizontal">
 
     <ir.beigirad.zigzagview.ZigzagView
+        android:id="@+id/zigzag1"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        app:zigzagBackgroundColor="#FF8F00"
+        app:zigzagElevation="8dp"
+        app:zigzagHeight="7dp"
+        app:zigzagPaddingContent="16dp"
+        app:zigzagShadowAlpha="0.9"
+        app:zigzagSides="bottom">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="ZigzagView"
+            android:textColor="#000000"
+            android:textSize="23sp" />
+    </ir.beigirad.zigzagview.ZigzagView>
+
+    <ir.beigirad.zigzagview.ZigzagView
+        android:id="@+id/zigzag2"
         android:layout_width="match_parent"
         android:layout_height="240dp"
         app:zigzagBackgroundColor="#0277BD"
@@ -38,7 +36,6 @@
         app:zigzagPaddingContent="16dp"
         app:zigzagShadowAlpha="1"
         app:zigzagSides="top|bottom">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,8 +51,12 @@
                 android:textSize="23sp" />
 
         </LinearLayout>
-
-
     </ir.beigirad.zigzagview.ZigzagView>
+
+    <Button
+        android:id="@+id/btn_randomize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Background" />
 
 </LinearLayout>
