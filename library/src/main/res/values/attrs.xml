@@ -13,6 +13,8 @@
         <attr name="zigzagSides">
             <flag name="top" value="1" />
             <flag name="bottom" value="2" />
+            <flag name="right" value="4" />
+            <flag name="left" value="8" />
         </attr>
         <attr name="zigzagShadowAlpha" format="float" />
     </declare-styleable>
