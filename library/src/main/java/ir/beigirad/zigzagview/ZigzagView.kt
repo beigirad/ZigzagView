@@ -91,9 +91,9 @@ class ZigzagView @JvmOverloads constructor(
             rectMain.bottom - zigzagPaddingBottom
         )
         rectContent.set(
-            rectZigzag.left + zigzagPaddingContent,
+            rectZigzag.left + zigzagPaddingContent + (if (containsSide(zigzagSides, ZIGZAG_LEFT)) zigzagHeight else 0f),
             rectZigzag.top + zigzagPaddingContent + (if (containsSide(zigzagSides, ZIGZAG_TOP)) zigzagHeight else 0f),
-            rectZigzag.right - zigzagPaddingContent,
+            rectZigzag.right - zigzagPaddingContent - if (containsSide(zigzagSides, ZIGZAG_RIGHT)) zigzagHeight else 0f,
             rectZigzag.bottom - zigzagPaddingContent - if (containsSide(zigzagSides, ZIGZAG_BOTTOM)) zigzagHeight else 0f
         )
         super.setPadding(
@@ -120,12 +120,18 @@ class ZigzagView @JvmOverloads constructor(
         val top = rectZigzag.top
         val bottom = rectZigzag.bottom
         pathZigzag.moveTo(right, bottom)
-        pathZigzag.lineTo(right, top)
+        if (containsSide(zigzagSides, ZIGZAG_RIGHT) && zigzagHeight > 0)
+            drawVerticalSide(pathZigzag, top, right, bottom, isLeft = false)
+        else
+            pathZigzag.lineTo(right, top)
         if (containsSide(zigzagSides, ZIGZAG_TOP) && zigzagHeight > 0)
             drawHorizontalSide(pathZigzag, left, top, right, isTop = true)
         else
             pathZigzag.lineTo(left, top)
-        pathZigzag.lineTo(left, bottom)
+        if (containsSide(zigzagSides, ZIGZAG_LEFT) && zigzagHeight > 0)
+            drawVerticalSide(pathZigzag, top, left, bottom, isLeft = true)
+        else
+            pathZigzag.lineTo(left, bottom)
         if (containsSide(zigzagSides, ZIGZAG_BOTTOM) && zigzagHeight > 0)
             drawHorizontalSide(pathZigzag, left, bottom, right, isTop = false)
         else
@@ -184,6 +190,40 @@ class ZigzagView @JvmOverloads constructor(
         }
     }
 
+    private fun drawVerticalSide(path: Path, top: Float, x: Float, bottom: Float, isLeft: Boolean) {
+        val h = zigzagHeight
+        val seed = 2 * h
+        val width = bottom - top
+        val count: Int = (width / seed).toInt()
+        val diff = width - seed * count
+        val sideDiff = diff / 2
+        val halfSeed = seed / 2
+        val innerHeight = if (isLeft) x + h else x - h
+        if (!isLeft) {
+            for (i in count downTo 1) {
+                val startSeed = i * seed + sideDiff + top.toInt()
+                var endSeed = startSeed - seed
+                if (i == 1) {
+                    endSeed -= sideDiff
+                }
+                path.lineTo(innerHeight, startSeed - halfSeed)
+                path.lineTo(x, endSeed)
+            }
+        } else {
+            for (i in 0 until count) {
+                var startSeed = i * seed + sideDiff + top.toInt()
+                var endSeed = startSeed + seed
+                if (i == 0) {
+                    startSeed = top.toInt() + sideDiff
+                } else if (i == count - 1) {
+                    endSeed += sideDiff
+                }
+                path.lineTo(innerHeight, startSeed + halfSeed)
+                path.lineTo(x, endSeed)
+            }
+        }
+    }
+
     private fun containsSide(flagSet: Int, flag: Int): Boolean {
         return flagSet or flag == flagSet
     }
@@ -191,5 +231,7 @@ class ZigzagView @JvmOverloads constructor(
     companion object {
         private const val ZIGZAG_TOP = 1
         private const val ZIGZAG_BOTTOM = 2 // default to be backward compatible.Like google ;)
+        private const val ZIGZAG_RIGHT = 4
+        private const val ZIGZAG_LEFT = 8
     }
 }
