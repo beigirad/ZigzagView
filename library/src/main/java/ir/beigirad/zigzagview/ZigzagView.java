@@ -15,11 +15,10 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.FrameLayout;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import static android.graphics.Bitmap.Config.ALPHA_8;
 import static android.graphics.Color.BLACK;

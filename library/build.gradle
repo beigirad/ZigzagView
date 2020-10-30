@@ -4,11 +4,11 @@ group = 'com.github.beigirad'
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 30
 
         def majorVersion = 1
         def minorVersion = 0
@@ -29,5 +29,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 }
