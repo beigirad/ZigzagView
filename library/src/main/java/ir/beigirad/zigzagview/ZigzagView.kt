@@ -53,19 +53,21 @@ class ZigzagView @JvmOverloads constructor(
     var rectContent = Rect()
 
     init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.ZigzagView)
-        zigzagElevation = a.getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f).toInt()
-        zigzagHeight = a.getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f).toInt()
-        zigzagPaddingContent = a.getDimension(R.styleable.ZigzagView_zigzagPaddingContent, 0.0f).toInt()
-        zigzagBackgroundColor = a.getColor(R.styleable.ZigzagView_zigzagBackgroundColor, Color.WHITE)
-        zigzagPadding = a.getDimension(R.styleable.ZigzagView_zigzagPadding, zigzagElevation.toFloat()).toInt()
-        zigzagPaddingLeft = a.getDimension(R.styleable.ZigzagView_zigzagPaddingLeft, zigzagPadding.toFloat()).toInt()
-        zigzagPaddingRight = a.getDimension(R.styleable.ZigzagView_zigzagPaddingRight, zigzagPadding.toFloat()).toInt()
-        zigzagPaddingTop = a.getDimension(R.styleable.ZigzagView_zigzagPaddingTop, zigzagPadding.toFloat()).toInt()
-        zigzagPaddingBottom = a.getDimension(R.styleable.ZigzagView_zigzagPaddingBottom, zigzagPadding.toFloat()).toInt()
-        zigzagSides = a.getInt(R.styleable.ZigzagView_zigzagSides, ZIGZAG_BOTTOM)
-        zigzagShadowAlpha = a.getFloat(R.styleable.ZigzagView_zigzagShadowAlpha, 0.5f)
-        a.recycle()
+        context.obtainStyledAttributes(attrs, R.styleable.ZigzagView).run {
+            zigzagElevation = getDimension(R.styleable.ZigzagView_zigzagElevation, 0.0f).toInt()
+            zigzagHeight = getDimension(R.styleable.ZigzagView_zigzagHeight, 0.0f).toInt()
+            zigzagPaddingContent = getDimension(R.styleable.ZigzagView_zigzagPaddingContent, 0.0f).toInt()
+            zigzagBackgroundColor = getColor(R.styleable.ZigzagView_zigzagBackgroundColor, Color.WHITE)
+            zigzagPadding = getDimension(R.styleable.ZigzagView_zigzagPadding, zigzagElevation.toFloat()).toInt()
+            zigzagPaddingLeft = getDimension(R.styleable.ZigzagView_zigzagPaddingLeft, zigzagPadding.toFloat()).toInt()
+            zigzagPaddingRight = getDimension(R.styleable.ZigzagView_zigzagPaddingRight, zigzagPadding.toFloat()).toInt()
+            zigzagPaddingTop = getDimension(R.styleable.ZigzagView_zigzagPaddingTop, zigzagPadding.toFloat()).toInt()
+            zigzagPaddingBottom = getDimension(R.styleable.ZigzagView_zigzagPaddingBottom, zigzagPadding.toFloat()).toInt()
+            zigzagSides = getInt(R.styleable.ZigzagView_zigzagSides, ZIGZAG_BOTTOM)
+            zigzagShadowAlpha = getFloat(R.styleable.ZigzagView_zigzagShadowAlpha, 0.5f)
+            recycle()
+        }
+
         zigzagElevation = zigzagElevation.coerceAtMost(25)
         zigzagShadowAlpha = zigzagShadowAlpha.coerceAtMost(100f)
         paintZigzag.color = zigzagBackgroundColor
@@ -75,10 +77,25 @@ class ZigzagView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        rectMain[0, 0, measuredWidth] = measuredHeight
-        rectZigzag[rectMain.left + zigzagPaddingLeft, rectMain.top + zigzagPaddingTop, rectMain.right - zigzagPaddingRight] = rectMain.bottom - zigzagPaddingBottom
-        rectContent[rectZigzag.left + zigzagPaddingContent, rectZigzag.top + zigzagPaddingContent + (if (containsSide(zigzagSides, ZIGZAG_TOP)) zigzagHeight else 0), rectZigzag.right - zigzagPaddingContent] = rectZigzag.bottom - zigzagPaddingContent - if (containsSide(zigzagSides, ZIGZAG_BOTTOM)) zigzagHeight else 0
-        super.setPadding(rectContent.left, rectContent.top, rectMain.right - rectContent.right, rectMain.bottom - rectContent.bottom)
+        rectMain.set(0, 0, measuredWidth, measuredHeight)
+        rectZigzag.set(
+            rectMain.left + zigzagPaddingLeft,
+            rectMain.top + zigzagPaddingTop,
+            rectMain.right - zigzagPaddingRight,
+            rectMain.bottom - zigzagPaddingBottom
+        )
+        rectContent.set(
+            rectZigzag.left + zigzagPaddingContent,
+            rectZigzag.top + zigzagPaddingContent + (if (containsSide(zigzagSides, ZIGZAG_TOP)) zigzagHeight else 0),
+            rectZigzag.right - zigzagPaddingContent,
+            rectZigzag.bottom - zigzagPaddingContent - if (containsSide(zigzagSides, ZIGZAG_BOTTOM)) zigzagHeight else 0
+        )
+        super.setPadding(
+            rectContent.left,
+            rectContent.top,
+            rectMain.right - rectContent.right,
+            rectMain.bottom - rectContent.bottom
+        )
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -98,9 +115,15 @@ class ZigzagView @JvmOverloads constructor(
         val bottom = rectZigzag.bottom.toFloat()
         pathZigzag.moveTo(right, bottom)
         pathZigzag.lineTo(right, top)
-        if (containsSide(zigzagSides, ZIGZAG_TOP)) drawHorizontalSide(pathZigzag, left, top, right, true) else pathZigzag.lineTo(left, top)
+        if (containsSide(zigzagSides, ZIGZAG_TOP))
+            drawHorizontalSide(pathZigzag, left, top, right, true)
+        else
+            pathZigzag.lineTo(left, top)
         pathZigzag.lineTo(left, bottom)
-        if (containsSide(zigzagSides, ZIGZAG_BOTTOM)) drawHorizontalSide(pathZigzag, left, bottom, right, false) else pathZigzag.lineTo(right, bottom)
+        if (containsSide(zigzagSides, ZIGZAG_BOTTOM))
+            drawHorizontalSide(pathZigzag, left, bottom, right, false)
+        else
+            pathZigzag.lineTo(right, bottom)
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
