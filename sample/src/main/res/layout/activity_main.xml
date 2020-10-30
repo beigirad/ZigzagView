@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <ir.beigirad.zigzagview.ZigzagView
         android:id="@+id/zigzag1"
@@ -32,7 +32,7 @@
         android:layout_height="240dp"
         app:zigzagBackgroundColor="#0277BD"
         app:zigzagElevation="16dp"
-        app:zigzagHeight="10dp"
+        app:zigzagHeight="12dp"
         app:zigzagPaddingContent="16dp"
         app:zigzagShadowAlpha="1"
         app:zigzagSides="top|bottom|left|right">
@@ -57,6 +57,7 @@
         android:id="@+id/btn_randomize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Change Background" />
 
 </LinearLayout>
