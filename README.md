@@ -39,7 +39,7 @@ dependencies {
     app:zigzagElevation="8dp"
     app:zigzagHeight="10dp"
     app:zigzagShadowAlpha="0.9"
-    app:zigzagSides="top|bottom"
+    app:zigzagSides="top|bottom|right|left"
     app:zigzagPaddingContent="16dp">
     
     // add child view(s)
@@ -47,19 +47,19 @@ dependencies {
 </ir.beigirad.zigzagview.ZigzagView>
 ```
 # Attributes
-|       Attribute       |       Type      | Default Value   |          Description          |
-|:---------------------:|:---------------:|-----------------|:-----------------------------:|
-|      zigzagHeight     |    dimension    | `0dp`           |     height of zigzag jags     |
-|    zigzagElevation    |    dimension    | `0dp`           |         side of shadow        |
-| zigzagBackgroundColor |      color      | `Color.WHITE`   |        background color       |
-|  zigzagPaddingContent |    dimension    | `0dp`           |        content padding        |
-|     zigzagPadding     |    dimension    | `0dp`           |          view padding         |
-|   zigzagPaddingLeft   |    dimension    | `zigzagPadding` |     left side view padding    |
-|   zigzagPaddingRight  |    dimension    | `zigzagPadding` |    right side view padding    |
-|  zigzagPaddingBottom  |    dimension    | `zigzagPadding` |    bottom side view padding   |
-|    zigzagPaddingTop   |    dimension    | `zigzagPadding` |     top side view padding     |
-|      zigzagSides      |      enum       | `bottom`        |     choosing zigzag sides     |
-|   zigzagShadowAlpha   | float `[0,1.0]` | `0.5`           | amount of shadow transparency |
+|       Attribute       |       Type      | Default Value   |  Description  |
+|:---------------------:|:---------------:|-----------------|:----------------------:|
+|      zigzagHeight     |    dimension    | `0dp`           |height of zigzag jags|
+|    zigzagElevation    |    dimension    | `0dp`           |side of shadow|
+| zigzagBackgroundColor |      color      | `Color.WHITE`   |background color|
+|  zigzagPaddingContent |    dimension    | `0dp`           |content padding|
+|     zigzagPadding     |    dimension    | `0dp`           |view padding|
+|   zigzagPaddingLeft   |    dimension    | `zigzagPadding` |left side view |
+|   zigzagPaddingRight  |    dimension    | `zigzagPadding` |right side view padding|
+|  zigzagPaddingBottom  |    dimension    | `zigzagPadding` |bottom side view padding|
+|    zigzagPaddingTop   |    dimension    | `zigzagPadding` |top side view padding|
+|      zigzagSides      |      enum       | `bottom`        |choosing zigzag sides `(top,bottom,right,left)`|
+|   zigzagShadowAlpha   |     float       | `0.5`           |amount of shadow transparency from `[0,1.0]`|
 
 
 # Thanks
