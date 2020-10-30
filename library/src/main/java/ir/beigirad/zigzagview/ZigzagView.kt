@@ -35,8 +35,18 @@ class ZigzagView @JvmOverloads constructor(
     private var zigzagSides = 0
     private var zigzagShadowAlpha = 0f
     private val pathZigzag = Path()
-    private var paintZigzag: Paint? = null
-    private var paintShadow: Paint? = null
+    private val paintZigzag by lazy {
+        Paint().apply {
+            color = Color.BLACK
+            style = Paint.Style.FILL
+        }
+    }
+    private val paintShadow by lazy {
+        Paint().apply {
+            isAntiAlias = true
+            colorFilter = PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN)
+        }
+    }
     private var shadow: Bitmap? = null
     var rectMain = Rect()
     var rectZigzag = Rect()
@@ -56,14 +66,10 @@ class ZigzagView @JvmOverloads constructor(
         zigzagSides = a.getInt(R.styleable.ZigzagView_zigzagSides, ZIGZAG_BOTTOM)
         zigzagShadowAlpha = a.getFloat(R.styleable.ZigzagView_zigzagShadowAlpha, 0.5f)
         a.recycle()
-        zigzagElevation = Math.min(zigzagElevation, 25)
-        zigzagShadowAlpha = Math.min(zigzagShadowAlpha, 100f)
-        paintZigzag = Paint()
-        paintZigzag!!.color = zigzagBackgroundColor
-        paintZigzag!!.style = Paint.Style.FILL
-        paintShadow = Paint(Paint.ANTI_ALIAS_FLAG)
-        paintShadow!!.colorFilter = PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN)
-        paintShadow!!.alpha = (zigzagShadowAlpha * 100).toInt()
+        zigzagElevation = zigzagElevation.coerceAtMost(25)
+        zigzagShadowAlpha = zigzagShadowAlpha.coerceAtMost(100f)
+        paintZigzag.color = zigzagBackgroundColor
+        paintShadow.alpha = (zigzagShadowAlpha * 100).toInt()
         setWillNotDraw(false)
     }
 
@@ -82,7 +88,7 @@ class ZigzagView @JvmOverloads constructor(
             drawShadow()
             canvas.drawBitmap(shadow!!, 0f, 0f, null)
         }
-        canvas.drawPath(pathZigzag, paintZigzag!!)
+        canvas.drawPath(pathZigzag, paintZigzag)
     }
 
     private fun drawZigzag() {
@@ -102,7 +108,7 @@ class ZigzagView @JvmOverloads constructor(
         shadow = Bitmap.createBitmap(width, height, Bitmap.Config.ALPHA_8)
         shadow!!.eraseColor(Color.TRANSPARENT)
         val c = Canvas(shadow!!)
-        c.drawPath(pathZigzag, paintShadow!!)
+        c.drawPath(pathZigzag, paintShadow)
         val rs = RenderScript.create(context)
         val blur = ScriptIntrinsicBlur.create(rs, Element.U8(rs))
         val input = Allocation.createFromBitmap(rs, shadow)
@@ -129,7 +135,7 @@ class ZigzagView @JvmOverloads constructor(
                 val startSeed = i * seed + sideDiff + left.toInt()
                 var endSeed = startSeed - seed
                 if (i == 1) {
-                    endSeed = endSeed - sideDiff
+                    endSeed -= sideDiff
                 }
                 path.lineTo(startSeed - halfSeed, innerHeight)
                 path.lineTo(endSeed.toFloat(), y)
@@ -141,7 +147,7 @@ class ZigzagView @JvmOverloads constructor(
                 if (i == 0) {
                     startSeed = left.toInt() + sideDiff
                 } else if (i == count - 1) {
-                    endSeed = endSeed + sideDiff
+                    endSeed += sideDiff
                 }
                 path.lineTo(startSeed + halfSeed, innerHeight)
                 path.lineTo(endSeed.toFloat(), y)
