@@ -48,9 +48,9 @@ class ZigzagView @JvmOverloads constructor(
         }
     }
     private var shadow: Bitmap? = null
-    var rectMain = Rect()
-    var rectZigzag = Rect()
-    var rectContent = Rect()
+    private var rectMain = Rect()
+    private var rectZigzag = Rect()
+    private var rectContent = Rect()
 
     init {
         context.obtainStyledAttributes(attrs, R.styleable.ZigzagView).run {
@@ -68,8 +68,8 @@ class ZigzagView @JvmOverloads constructor(
             recycle()
         }
 
-        zigzagElevation = zigzagElevation.coerceAtMost(25)
-        zigzagShadowAlpha = zigzagShadowAlpha.coerceAtMost(100f)
+        zigzagElevation = zigzagElevation.coerceIn(0, 25)
+        zigzagShadowAlpha = zigzagShadowAlpha.coerceIn(0f, 1f)
         paintZigzag.color = zigzagBackgroundColor
         paintShadow.alpha = (zigzagShadowAlpha * 100).toInt()
         setWillNotDraw(false)
