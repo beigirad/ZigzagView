@@ -115,12 +115,12 @@ class ZigzagView @JvmOverloads constructor(
         val bottom = rectZigzag.bottom.toFloat()
         pathZigzag.moveTo(right, bottom)
         pathZigzag.lineTo(right, top)
-        if (containsSide(zigzagSides, ZIGZAG_TOP))
+        if (containsSide(zigzagSides, ZIGZAG_TOP) && zigzagHeight > 0)
             drawHorizontalSide(pathZigzag, left, top, right, true)
         else
             pathZigzag.lineTo(left, top)
         pathZigzag.lineTo(left, bottom)
-        if (containsSide(zigzagSides, ZIGZAG_BOTTOM))
+        if (containsSide(zigzagSides, ZIGZAG_BOTTOM) && zigzagHeight > 0)
             drawHorizontalSide(pathZigzag, left, bottom, right, false)
         else
             pathZigzag.lineTo(right, bottom)
