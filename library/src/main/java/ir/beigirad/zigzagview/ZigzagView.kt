@@ -78,6 +78,8 @@ class ZigzagView @JvmOverloads constructor(
         zigzagElevation = zigzagElevation.coerceIn(0f, 25f)
         zigzagShadowAlpha = zigzagShadowAlpha.coerceIn(0f, 1f)
         paintShadow.alpha = (zigzagShadowAlpha * 100).toInt()
+
+        setLayerType(LAYER_TYPE_SOFTWARE, null)
         setWillNotDraw(false)
     }
 
