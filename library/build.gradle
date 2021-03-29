@@ -13,7 +13,7 @@ android {
 
         def majorVersion = 1
         def minorVersion = 2
-        def patchVersion = 0
+        def patchVersion = 1
 
         versionCode majorVersion * 10000 + minorVersion * 100 + patchVersion
         versionName "$majorVersion.$minorVersion.$patchVersion"
